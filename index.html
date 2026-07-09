@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ludmila — Designer & Criativa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1C101E;
+      --text: #FFF8F9;
+      --accent: #F95D40;
+      --nude: #E2C7BC;
+      --muted: #563D52;
+      --mid: #9A7886;
+      --dark: #202124;
+      --border: rgba(255,248,249,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      padding-top: 5rem;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .9rem 2rem;
+      width: calc(100% - 3rem);
+      max-width: 1100px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,248,249,0.15);
+      background: rgba(28,16,30,0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      letter-spacing: .04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,248,249,.6);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: .55rem 1.4rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+
+    .nav-cta:hover { opacity: .85; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all .3s;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2.5rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-letter {
+      position: absolute;
+      top: 50%;
+      right: -4rem;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18rem, 32vw, 38rem);
+      font-weight: 900;
+      font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,248,249,.06);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 9rem);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: -.02em;
+      max-width: 14ch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--nude);
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-desc {
+      max-width: 36ch;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255,248,249,.65);
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--text);
+      padding: .85rem 2rem;
+      text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+
+    .btn-primary:hover { background: var(--accent); color: var(--bg); }
+
+    .btn-outline {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: .85rem 2rem;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+
+    .btn-outline:hover { border-color: var(--text); }
+
+    .hero-scroll {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-scroll-line {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      animation: expandLine 1.4s ease infinite alternate;
+    }
+
+    @keyframes expandLine {
+      from { width: 24px; opacity: .4; }
+      to { width: 56px; opacity: 1; }
+    }
+
+    .hero-scroll span {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(255,248,249,.4);
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: .9rem 0;
+      background: var(--bg);
+    }
+
+    .ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker:hover { animation-play-state: paused; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0 2.5rem;
+      white-space: nowrap;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(255,248,249,.5);
+    }
+
+    .ticker-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .ticker-item.highlight { color: var(--nude); }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 7rem 2.5rem; }
+
+    .section-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+
+    .section-title em { font-style: italic; color: var(--nude); }
+
+    /* ── PROJECTS ── */
+    #projetos { border-top: 1px solid var(--border); }
+
+    .projects-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .projects-link {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,248,249,.5);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+
+    .projects-link:hover { color: var(--text); }
+    .projects-link::after { content: '→'; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--muted);
+    }
+
+    .project-card:nth-child(1) { grid-column: 1 / 8; grid-row: 1 / 2; aspect-ratio: 16/9; }
+    .project-card:nth-child(2) { grid-column: 8 / 13; grid-row: 1 / 2; aspect-ratio: 4/5; }
+    .project-card:nth-child(3) { grid-column: 1 / 5; grid-row: 2 / 3; aspect-ratio: 1; }
+    .project-card:nth-child(4) { grid-column: 5 / 13; grid-row: 2 / 3; aspect-ratio: 16/9; }
+
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .project-card:hover .project-img { transform: scale(1.04); }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,16,30,.92) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .project-card:hover .project-overlay { opacity: 1; }
+
+    .project-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .project-year {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      color: rgba(255,248,249,.5);
+      margin-top: .25rem;
+    }
+
+    /* placeholder gradients for project cards */
+    .card-ph-1 { background: linear-gradient(135deg, #1a0a10 0%, #3d1524 100%); }
+    .card-ph-2 { background: linear-gradient(135deg, #0a0f1a 0%, #152435 100%); }
+    .card-ph-3 { background: linear-gradient(135deg, #0f1a10 0%, #1e3d21 100%); }
+    .card-ph-4 { background: linear-gradient(135deg, #1a150a 0%, #3d3015 100%); }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-ph-label {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-style: italic;
+      color: rgba(255,248,249,.07);
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    /* ── SERVIÇOS ── */
+    #servicos { border-top: 1px solid var(--border); }
+
+    .services-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .service-list { list-style: none; }
+
+    .service-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.8rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      cursor: pointer;
+      transition: padding-left .3s;
+    }
+
+    .service-item:hover { padding-left: .75rem; }
+
+    .service-num {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      color: var(--accent);
+      margin-top: .2rem;
+      flex-shrink: 0;
+    }
+
+    .service-info { flex: 1; }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: .4rem;
+      transition: color .2s;
+    }
+
+    .service-item:hover .service-name { color: var(--nude); }
+
+    .service-desc {
+      font-size: .875rem;
+      line-height: 1.7;
+      color: rgba(255,248,249,.5);
+      max-width: 36ch;
+    }
+
+    .service-arrow {
+      color: rgba(255,248,249,.2);
+      font-size: 1.2rem;
+      transition: color .2s, transform .2s;
+      margin-top: .25rem;
+    }
+
+    .service-item:hover .service-arrow { color: var(--accent); transform: translateX(4px); }
+
+    .services-aside {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .services-aside-box {
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+    }
+
+    .aside-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .aside-stat {
+      margin-bottom: 2rem;
+    }
+
+    .aside-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--nude);
+    }
+
+    .aside-stat-label {
+      font-size: .8rem;
+      color: rgba(255,248,249,.5);
+      margin-top: .25rem;
+    }
+
+    .aside-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .aside-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,248,249,.7);
+    }
+
+    /* ── SOBRE ── */
+    #sobre {
+      background: var(--accent);
+      color: var(--bg);
+      border-top: none;
+    }
+
+    #sobre .section-tag { color: rgba(28,16,30,.6); }
+    #sobre .section-title { color: var(--bg); }
+    #sobre .section-title em { color: #1C101E; opacity: .45; }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(28,16,30,.75);
+      margin-bottom: 2rem;
+    }
+
+    .about-link {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      text-decoration: none;
+      border-bottom: 1px solid var(--bg);
+      padding-bottom: .15rem;
+      transition: opacity .2s;
+    }
+
+    .about-link:hover { opacity: .6; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .about-stat {
+      padding: 2rem;
+      background: rgba(28,16,30,.08);
+    }
+
+    .about-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--bg);
+      line-height: 1;
+    }
+
+    .about-stat-label {
+      font-size: .8rem;
+      color: rgba(28,16,30,.6);
+      margin-top: .5rem;
+    }
+
+    /* ── CONTATO ── */
+    #contato {
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(182,255,0,.07) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 80% at 80% 30%, rgba(212,168,255,.06) 0%, transparent 60%),
+                  var(--bg);
+      animation: contactPulse 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes contactPulse {
+      0%   { background-position: 20% 50%, 80% 30%; filter: brightness(1); }
+      50%  { background-position: 30% 60%, 70% 20%; filter: brightness(1.08); }
+      100% { background-position: 15% 45%, 85% 40%; filter: brightness(1); }
+    }
+
+    .contact-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 2.5rem 5rem;
+    }
+
+    .contact-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    .contact-eyebrow::before,
+    .contact-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .contact-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-headline .rotating-wrap {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      height: 1.05em;
+      vertical-align: bottom;
+    }
+
+    .rotating-word {
+      display: block;
+      color: var(--accent);
+      font-style: italic;
+      animation: wordSlide 9s cubic-bezier(.76,0,.24,1) infinite;
+    }
+
+    @keyframes wordSlide {
+      0%, 20%    { transform: translateY(0);       opacity: 1; }
+      25%, 45%   { transform: translateY(-105%);   opacity: 0; }
+      50%, 70%   { transform: translateY(-105%);   opacity: 0; }
+      75%        { transform: translateY(0);        opacity: 0; }
+      80%, 100%  { transform: translateY(0);        opacity: 1; }
+    }
+
+    .contact-sub {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: rgba(255,248,249,.5);
+      max-width: 44ch;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Magnetic button */
+    .mag-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 5rem;
+    }
+
+    .mag-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .85rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 1.3rem 3rem;
+      cursor: pointer;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 0 0 0 rgba(182,255,0,0);
+      will-change: transform;
+    }
+
+    .mag-btn:hover {
+      box-shadow: 0 12px 40px rgba(182,255,0,.3);
+    }
+
+    .mag-btn-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+      transition: transform .3s;
+    }
+
+    .mag-btn:hover .mag-btn-icon { transform: rotate(45deg); }
+
+    /* Contact cards */
+    .contact-cards {
+      display: flex;
+      gap: 1px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .contact-card {
+      flex: 1;
+      padding: 1.75rem 1.5rem;
+      background: rgba(255,248,249,.02);
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background .25s;
+      border-right: 1px solid var(--border);
+    }
+
+    .contact-card:last-child { border-right: none; }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .contact-card:hover { background: rgba(182,255,0,.05); }
+    .contact-card:hover::before { transform: scaleX(1); }
+
+    .cc-icon {
+      font-size: 1.2rem;
+      margin-bottom: .25rem;
+    }
+
+    .cc-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,248,249,.35);
+    }
+
+    .cc-value {
+      font-size: .9rem;
+      color: var(--nude);
+    }
+
+    .cc-arrow {
+      margin-top: auto;
+      font-size: .8rem;
+      color: rgba(255,248,249,.2);
+      transition: color .2s, transform .2s;
+    }
+
+    .contact-card:hover .cc-arrow {
+      color: var(--accent);
+      transform: translateX(4px) translateY(-4px);
+    }
+
+    @media (max-width: 600px) {
+      .contact-cards { flex-direction: column; }
+      .contact-card { border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-card:last-child { border-bottom: none; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,248,249,.35);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .08em;
+      color: rgba(255,248,249,.25);
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s cubic-bezier(.25,.46,.45,.94), transform .7s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 0 1.5rem 3rem; }
+
+      .hero-bg-letter { font-size: clamp(10rem, 50vw, 18rem); right: -1rem; }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .project-card:nth-child(1),
+      .project-card:nth-child(2),
+      .project-card:nth-child(3),
+      .project-card:nth-child(4) {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        aspect-ratio: 16/9;
+      }
+
+      .project-overlay { opacity: 1; }
+
+      .services-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .services-aside { position: static; }
+
+      .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .about-stat { padding: 1.5rem; }
+    }
+
+    /* ── MOBILE NAV ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .mobile-nav a:hover { color: var(--accent); }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Ludmila<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="#contato" class="nav-cta">Trabalhe comigo</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-close" id="mobileClose">✕</button>
+    <a href="#projetos" class="mobile-link">Projetos</a>
+    <a href="#servicos" class="mobile-link">Serviços</a>
+    <a href="#sobre" class="mobile-link">Sobre</a>
+    <a href="#contato" class="mobile-link">Contato</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-letter">L</div>
+    <div class="hero-label">Designer Visual &amp; Diretora Criativa</div>
+    <h1 class="hero-title">
+      Onde <em>arte</em><br>encontra<br>estratégia.
+    </h1>
+    <div class="hero-sub">
+      <p class="hero-desc">
+        Transformo ideias complexas em experiências visuais que conectam marcas às pessoas certas — com intenção, estética e impacto.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#projetos" class="btn-primary">Ver projetos</a>
+        <a href="#contato" class="btn-outline">Fale comigo</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <div class="ticker-item highlight">Identidade Visual<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Direção de Arte<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">UI/UX Design<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Motion Graphics<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">Branding Estratégico<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Social Media<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">Editorial Design<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Packaging<span class="ticker-dot"></span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="ticker-item highlight">Identidade Visual<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Direção de Arte<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">UI/UX Design<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Motion Graphics<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">Branding Estratégico<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Social Media<span class="ticker-dot"></span></div>
+      <div class="ticker-item highlight">Editorial Design<span class="ticker-dot"></span></div>
+      <div class="ticker-item">Packaging<span class="ticker-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <div class="projects-header">
+      <div>
+        <div class="section-tag reveal">Trabalhos selecionados</div>
+        <h2 class="section-title reveal reveal-delay-1">Projetos <em>recentes</em></h2>
+      </div>
+      <a href="#contato" class="projects-link reveal reveal-delay-2">Ver todos os trabalhos</a>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card card-ph-1 reveal">
+        <div class="card-inner"><span class="card-ph-label">01</span></div>
+        <div class="project-overlay">
+          <div class="project-tag">Branding</div>
+          <div class="project-name">Bloom Studio</div>
+          <div class="project-year">2025</div>
+        </div>
+      </div>
+      <div class="project-card card-ph-2 reveal reveal-delay-1">
+        <div class="card-inner"><span class="card-ph-label">02</span></div>
+        <div class="project-overlay">
+          <div class="project-tag">UI/UX</div>
+          <div class="project-name">Artica App</div>
+          <div class="project-year">2025</div>
+        </div>
+      </div>
+      <div class="project-card card-ph-3 reveal reveal-delay-2">
+        <div class="card-inner"><span class="card-ph-label">03</span></div>
+        <div class="project-overlay">
+          <div class="project-tag">Editorial</div>
+          <div class="project-name">Revista Norte</div>
+          <div class="project-year">2024</div>
+        </div>
+      </div>
+      <div class="project-card card-ph-4 reveal reveal-delay-3">
+        <div class="card-inner"><span class="card-ph-label">04</span></div>
+        <div class="project-overlay">
+          <div class="project-tag">Packaging</div>
+          <div class="project-name">Terra Viva</div>
+          <div class="project-year">2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="services-layout">
+      <div>
+        <div class="section-tag reveal">O que eu faço</div>
+        <h2 class="section-title reveal reveal-delay-1">Serviços &amp;<br><em>especialidades</em></h2>
+        <ul class="service-list">
+          <li class="service-item reveal reveal-delay-1">
+            <span class="service-num">01</span>
+            <div class="service-info">
+              <div class="service-name">Identidade Visual</div>
+              <p class="service-desc">Construção completa de marca — logo, tipografia, paleta, voz e sistema visual.</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </li>
+          <li class="service-item reveal reveal-delay-2">
+            <span class="service-num">02</span>
+            <div class="service-info">
+              <div class="service-name">Direção de Arte</div>
+              <p class="service-desc">Conceituação e execução visual para campanhas, editoriais e produções criativas.</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </li>
+          <li class="service-item reveal reveal-delay-3">
+            <span class="service-num">03</span>
+            <div class="service-info">
+              <div class="service-name">Design Digital</div>
+              <p class="service-desc">Interfaces intuitivas e responsivas — sites, apps e experiências digitais.</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </li>
+          <li class="service-item reveal reveal-delay-4">
+            <span class="service-num">04</span>
+            <div class="service-info">
+              <div class="service-name">Social &amp; Content</div>
+              <p class="service-desc">Estratégia visual para redes sociais com consistência e impacto estético.</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="services-aside reveal reveal-delay-2">
+        <div class="services-aside-box">
+          <div class="aside-label">Em números</div>
+          <div class="aside-stat">
+            <div class="aside-stat-num">48+</div>
+            <div class="aside-stat-label">Projetos entregues</div>
+          </div>
+          <hr class="aside-divider" />
+          <div class="aside-stat">
+            <div class="aside-stat-num">6</div>
+            <div class="aside-stat-label">Anos de experiência</div>
+          </div>
+          <hr class="aside-divider" />
+          <div class="aside-stat">
+            <div class="aside-stat-num">32</div>
+            <div class="aside-stat-label">Clientes satisfeitos</div>
+          </div>
+          <hr class="aside-divider" />
+          <p class="aside-quote">"Design não é só o que parece. É como funciona — e como faz sentir."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="about-layout">
+      <div>
+        <div class="section-tag reveal">Sobre mim</div>
+        <h2 class="section-title reveal reveal-delay-1">Designer com<br>alma de <em>narradora</em></h2>
+        <p class="about-text reveal reveal-delay-2">
+          Sou Ludmila, designer visual baseada no Brasil com mais de 6 anos criando marcas que importam. Meu trabalho vive na interseção entre estratégia e sensibilidade — onde cada escolha visual conta uma história com propósito.
+        </p>
+        <p class="about-text reveal reveal-delay-3">
+          Acredito que o bom design começa com escuta ativa. Antes de qualquer pixel, entendo a marca, o público e o objetivo. Só então crio.
+        </p>
+        <a href="#contato" class="about-link reveal reveal-delay-4">Vamos conversar →</a>
+      </div>
+      <div class="about-stats">
+        <div class="about-stat reveal reveal-delay-1">
+          <div class="about-stat-num">48+</div>
+          <div class="about-stat-label">Projetos</div>
+        </div>
+        <div class="about-stat reveal reveal-delay-2">
+          <div class="about-stat-num">6</div>
+          <div class="about-stat-label">Anos</div>
+        </div>
+        <div class="about-stat reveal reveal-delay-3">
+          <div class="about-stat-num">32</div>
+          <div class="about-stat-label">Clientes</div>
+        </div>
+        <div class="about-stat reveal reveal-delay-4">
+          <div class="about-stat-num">12</div>
+          <div class="about-stat-label">Prêmios</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contact-bg"></div>
+    <div class="contact-inner">
+
+      <div class="contact-eyebrow reveal">Vamos trabalhar juntos</div>
+
+      <h2 class="contact-headline reveal reveal-delay-1">
+        Pronta para o seu<br>
+        próximo
+        <span class="rotating-wrap">
+          <span class="rotating-word" id="rword">branding</span>
+        </span>
+        ?
+      </h2>
+
+      <p class="contact-sub reveal reveal-delay-2">
+        Seja uma identidade visual do zero, um site que impressiona ou uma campanha que fica na memória — me conta o que você tem em mente.
+      </p>
+
+      <div class="mag-wrap reveal reveal-delay-3">
+        <a href="mailto:ola@ludmila.design" class="mag-btn" id="magBtn">
+          Iniciar um projeto
+          <span class="mag-btn-icon">↗</span>
+        </a>
+      </div>
+
+      <div class="contact-cards reveal reveal-delay-4">
+        <a href="mailto:ola@ludmila.design" class="contact-card">
+          <div class="cc-icon">✉</div>
+          <div class="cc-label">E-mail</div>
+          <div class="cc-value">ola@ludmila.design</div>
+          <div class="cc-arrow">↗</div>
+        </a>
+        <a href="#" class="contact-card">
+          <div class="cc-icon">◎</div>
+          <div class="cc-label">Instagram</div>
+          <div class="cc-value">@ludmila.design</div>
+          <div class="cc-arrow">↗</div>
+        </a>
+        <a href="#" class="contact-card">
+          <div class="cc-icon">⬡</div>
+          <div class="cc-label">LinkedIn</div>
+          <div class="cc-value">/in/ludmiladesign</div>
+          <div class="cc-arrow">↗</div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Ludmila<span>.</span></div>
+    <ul class="footer-links">
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 Ludmila — Todos os direitos reservados</div>
+  </footer>
+
+  <script>
+    // NAV scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile nav
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileClose = document.getElementById('mobileClose');
+
+    hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+    mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileNav.classList.remove('open'));
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Hero elements visible immediately
+    document.querySelectorAll('#hero .reveal, .hero-label, .hero-title, .hero-sub, .hero-scroll').forEach(el => {
+      el.classList.add('visible');
+    });
+
+    // Rotating words
+    const words = ['branding', 'site', 'campanha', 'editorial', 'identidade'];
+    let wi = 0;
+    const rword = document.getElementById('rword');
+    setInterval(() => {
+      wi = (wi + 1) % words.length;
+      rword.style.animation = 'none';
+      rword.offsetHeight;
+      rword.textContent = words[wi];
+      rword.style.animation = 'wordSlide 9s cubic-bezier(.76,0,.24,1) infinite';
+    }, 3000);
+
+    // Magnetic button
+    const magBtn = document.getElementById('magBtn');
+    const magWrap = magBtn?.closest('.mag-wrap');
+    if (magWrap) {
+      magWrap.addEventListener('mousemove', (e) => {
+        const r = magBtn.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) * 0.35;
+        const dy = (e.clientY - cy) * 0.35;
+        magBtn.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+      magWrap.addEventListener('mouseleave', () => {
+        magBtn.style.transform = 'translate(0,0)';
+      });
+    }
+
+    // Form submit → API
+    async function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const original = btn.textContent;
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      const body = {
+        nome: e.target.querySelector('#nome')?.value,
+        email: e.target.querySelector('#email')?.value,
+        servico: e.target.querySelector('#servico')?.value,
+        mensagem: e.target.querySelector('#msg')?.value,
+      };
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (res.ok) {
+          btn.textContent = 'Mensagem enviada ✓';
+          btn.style.background = 'var(--nude)';
+          btn.style.color = 'var(--bg)';
+          e.target.reset();
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+          }, 4000);
+        } else {
+          btn.textContent = data.error || 'Erro ao enviar';
+          btn.style.background = '#c0392b';
+          setTimeout(() => { btn.textContent = original; btn.style.background = ''; btn.disabled = false; }, 3000);
+        }
+      } catch {
+        btn.textContent = 'Erro de conexão';
+        btn.style.background = '#c0392b';
+        setTimeout(() => { btn.textContent = original; btn.style.background = ''; btn.disabled = false; }, 3000);
+      }
+    }
+  </script>
+</body>
+</html>

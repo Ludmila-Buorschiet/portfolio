@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-ludmila",
+  "version": "1.0.0",
+  "description": "Portfolio pessoal Ludmila Buorschiet",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}
