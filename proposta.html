@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solicitar Proposta — Ludmila Buorschiet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1C101E;
+      --text: #FFF8F9;
+      --accent: #F95D40;
+      --nude: #E2C7BC;
+      --muted: #563D52;
+      --mid: #9A7886;
+      --dark: #202124;
+      --border: rgba(255,248,249,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-back { font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); text-decoration: none; display: flex; align-items: center; gap: .5rem; transition: color .2s; }
+    .nav-back:hover { color: var(--text); }
+    .nav-back::before { content: '←'; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 5rem 2.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+    }
+    .hero-tag { font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 1; letter-spacing: -.02em; }
+    .hero-title em { font-style: italic; color: var(--nude); }
+    .hero-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .info-item { display: flex; flex-direction: column; gap: .3rem; }
+    .info-label { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); }
+    .info-value { font-size: .9rem; color: rgba(255,248,249,.7); line-height: 1.6; }
+
+    /* ── PROGRESS ── */
+    .progress-wrap { padding: 2rem 2.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0; }
+    .step-item { display: flex; align-items: center; gap: .75rem; flex: 1; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace; font-size: .65rem; color: var(--mid);
+      flex-shrink: 0; transition: all .3s;
+    }
+    .step-item.active .step-num { border-color: var(--accent); background: var(--accent); color: var(--bg); }
+    .step-item.done .step-num { border-color: var(--nude); background: var(--nude); color: var(--bg); }
+    .step-label { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); transition: color .3s; }
+    .step-item.active .step-label { color: var(--text); }
+    .step-item.done .step-label { color: var(--nude); }
+    .step-line { flex: 1; height: 1px; background: var(--border); margin: 0 .5rem; transition: background .3s; }
+    .step-line.done { background: var(--nude); }
+
+    /* ── FORM ── */
+    .form-wrap { max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem; }
+
+    .step-panel { display: none; animation: fadeUp .4s ease; }
+    .step-panel.active { display: block; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+    .step-heading { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: .5rem; }
+    .step-sub { font-size: .9rem; color: var(--mid); margin-bottom: 2.5rem; line-height: 1.6; }
+
+    .field { margin-bottom: 1.5rem; }
+    .field-label { font-family: 'DM Mono', monospace; font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mid); margin-bottom: .6rem; display: block; }
+    .field-label span { color: var(--accent); }
+
+    input[type=text], input[type=email], input[type=tel], textarea, select {
+      width: 100%; background: transparent; border: 1px solid var(--border); color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: .9rem; padding: .85rem 1rem; outline: none;
+      transition: border-color .2s; appearance: none; border-radius: 0;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    input::placeholder, textarea::placeholder { color: rgba(255,248,249,.2); }
+    textarea { resize: vertical; min-height: 110px; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A7886' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; cursor: pointer; }
+    select option { background: #2a1530; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Tipo de serviço — cards */
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+    .service-card {
+      border: 1px solid var(--border); padding: 1.1rem; cursor: pointer;
+      transition: border-color .2s, background .2s; position: relative;
+    }
+    .service-card input { position: absolute; opacity: 0; pointer-events: none; }
+    .service-card:hover { border-color: var(--mid); }
+    .service-card.selected { border-color: var(--accent); background: rgba(249,93,64,.06); }
+    .service-icon { font-size: 1.3rem; margin-bottom: .6rem; display: block; }
+    .service-name { font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+    .service-check { position: absolute; top: .6rem; right: .6rem; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); display: none; align-items: center; justify-content: center; font-size: .6rem; color: var(--bg); }
+    .service-card.selected .service-check { display: flex; }
+
+    /* Budget slider */
+    .budget-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
+    .budget-opt {
+      border: 1px solid var(--border); padding: 1rem 1.25rem; cursor: pointer;
+      transition: border-color .2s, background .2s; display: flex; align-items: center; gap: .75rem;
+    }
+    .budget-opt input { position: absolute; opacity: 0; }
+    .budget-opt:hover { border-color: var(--mid); }
+    .budget-opt.selected { border-color: var(--accent); background: rgba(249,93,64,.06); }
+    .budget-radio { width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--mid); flex-shrink: 0; transition: all .2s; }
+    .budget-opt.selected .budget-radio { border-color: var(--accent); background: var(--accent); }
+    .budget-label { font-size: .85rem; }
+
+    /* Prazo */
+    .prazo-options { display: flex; gap: .75rem; flex-wrap: wrap; }
+    .prazo-opt {
+      border: 1px solid var(--border); padding: .65rem 1.25rem; cursor: pointer;
+      font-family: 'DM Mono', monospace; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase;
+      transition: border-color .2s, background .2s, color .2s; color: var(--mid);
+    }
+    .prazo-opt:hover { border-color: var(--mid); color: var(--text); }
+    .prazo-opt.selected { border-color: var(--accent); background: rgba(249,93,64,.06); color: var(--text); }
+
+    /* Nav buttons */
+    .btn-row { display: flex; align-items: center; justify-content: space-between; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .btn-prev { font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: .5rem; transition: color .2s; }
+    .btn-prev::before { content: '←'; }
+    .btn-prev:hover { color: var(--text); }
+    .btn-next {
+      font-family: 'DM Mono', monospace; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--bg); background: var(--accent); border: none; padding: .9rem 2.5rem;
+      cursor: pointer; transition: opacity .2s; display: flex; align-items: center; gap: .5rem;
+    }
+    .btn-next:hover { opacity: .85; }
+    .btn-next::after { content: '→'; }
+    .btn-next:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* Resumo */
+    .summary-block { border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1rem; }
+    .summary-title { font-family: 'DM Mono', monospace; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+    .summary-row { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 0; border-bottom: 1px solid var(--border); font-size: .875rem; }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-key { color: var(--mid); }
+    .summary-val { text-align: right; max-width: 60%; }
+
+    /* Sucesso */
+    .success-screen { display: none; text-align: center; padding: 4rem 0; }
+    .success-screen.show { display: block; animation: fadeUp .5s ease; }
+    .success-icon { font-size: 3.5rem; margin-bottom: 1.5rem; }
+    .success-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+    .success-title em { font-style: italic; color: var(--nude); }
+    .success-text { font-size: .95rem; color: var(--mid); max-width: 40ch; margin: 0 auto 2rem; line-height: 1.7; }
+    .success-link { font-family: 'DM Mono', monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); text-decoration: none; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: .62rem; color: rgba(255,248,249,.2); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 3rem; gap: 2rem; }
+      .form-wrap { padding: 3rem 1.5rem; }
+      .service-grid { grid-template-columns: repeat(2,1fr); }
+      .field-row { grid-template-columns: 1fr; }
+      .budget-options { grid-template-columns: 1fr; }
+      .progress-wrap { padding: 1.25rem 1.5rem; }
+      .step-label { display: none; }
+      footer { padding: 1.25rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Ludmila<span>.</span></a>
+    <a href="index.html" class="nav-back">Voltar ao portfólio</a>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <div class="hero-tag">Solicitar proposta</div>
+      <h1 class="hero-title">Vamos criar<br>algo <em>incrível</em><br>juntos.</h1>
+    </div>
+    <div class="hero-info">
+      <div class="info-item">
+        <span class="info-label">Tempo de resposta</span>
+        <span class="info-value">Retorno em até 48 horas úteis com uma proposta detalhada.</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">O que acontece depois</span>
+        <span class="info-value">Recebo sua solicitação → analiso o projeto → envio proposta com valores e cronograma → reunião de alinhamento.</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Contato direto</span>
+        <span class="info-value">ola@ludmila.design</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="step-item active" id="pi-1">
+      <div class="step-num">1</div>
+      <div class="step-label">Você</div>
+    </div>
+    <div class="step-line" id="pl-1"></div>
+    <div class="step-item" id="pi-2">
+      <div class="step-num">2</div>
+      <div class="step-label">Projeto</div>
+    </div>
+    <div class="step-line" id="pl-2"></div>
+    <div class="step-item" id="pi-3">
+      <div class="step-num">3</div>
+      <div class="step-label">Investimento</div>
+    </div>
+    <div class="step-line" id="pl-3"></div>
+    <div class="step-item" id="pi-4">
+      <div class="step-num">4</div>
+      <div class="step-label">Confirmar</div>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <form id="proposalForm" novalidate>
+
+      <!-- STEP 1: Dados pessoais -->
+      <div class="step-panel active" id="step-1">
+        <h2 class="step-heading">Sobre você</h2>
+        <p class="step-sub">Primeiro, me conta quem é você e como te encontro.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="nome">Nome completo <span>*</span></label>
+            <input type="text" id="nome" placeholder="Seu nome" required />
+          </div>
+          <div class="field">
+            <label class="field-label" for="empresa">Empresa / Marca</label>
+            <input type="text" id="empresa" placeholder="Nome da empresa (opcional)" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="email">E-mail <span>*</span></label>
+            <input type="email" id="email" placeholder="seu@email.com" required />
+          </div>
+          <div class="field">
+            <label class="field-label" for="telefone">WhatsApp / Telefone</label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="comoconheceu">Como me encontrou?</label>
+          <select id="comoconheceu">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Instagram</option>
+            <option>Indicação de amigo/colega</option>
+            <option>LinkedIn</option>
+            <option>Behance / Portfólio</option>
+            <option>Google</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div class="btn-row">
+          <span></span>
+          <button type="button" class="btn-next" onclick="nextStep(1)">Próximo</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Projeto -->
+      <div class="step-panel" id="step-2">
+        <h2 class="step-heading">O projeto</h2>
+        <p class="step-sub">Me conte o que você precisa criar. Pode selecionar mais de um serviço.</p>
+
+        <div class="field">
+          <label class="field-label">Tipo de serviço <span>*</span></label>
+          <div class="service-grid" id="serviceGrid">
+            <div class="service-card" onclick="toggleService(this,'Identidade Visual')">
+              <input type="checkbox" value="Identidade Visual" />
+              <span class="service-icon">◎</span>
+              <div class="service-name">Identidade Visual</div>
+              <div class="service-check">✓</div>
+            </div>
+            <div class="service-card" onclick="toggleService(this,'Direção de Arte')">
+              <input type="checkbox" value="Direção de Arte" />
+              <span class="service-icon">◈</span>
+              <div class="service-name">Direção de Arte</div>
+              <div class="service-check">✓</div>
+            </div>
+            <div class="service-card" onclick="toggleService(this,'UI/UX Design')">
+              <input type="checkbox" value="UI/UX Design" />
+              <span class="service-icon">⬡</span>
+              <div class="service-name">UI / UX Design</div>
+              <div class="service-check">✓</div>
+            </div>
+            <div class="service-card" onclick="toggleService(this,'Social Media')">
+              <input type="checkbox" value="Social Media" />
+              <span class="service-icon">◻</span>
+              <div class="service-name">Social Media</div>
+              <div class="service-check">✓</div>
+            </div>
+            <div class="service-card" onclick="toggleService(this,'Editorial / Print')">
+              <input type="checkbox" value="Editorial / Print" />
+              <span class="service-icon">▣</span>
+              <div class="service-name">Editorial / Print</div>
+              <div class="service-check">✓</div>
+            </div>
+            <div class="service-card" onclick="toggleService(this,'Outro')">
+              <input type="checkbox" value="Outro" />
+              <span class="service-icon">+</span>
+              <div class="service-name">Outro</div>
+              <div class="service-check">✓</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="descricao">Descrição do projeto <span>*</span></label>
+          <textarea id="descricao" placeholder="Descreva seu projeto: o que é, para quem é, qual o objetivo principal, referências que você admira..." required></textarea>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="publico">Público-alvo</label>
+          <input type="text" id="publico" placeholder="Ex: Mulheres 25-40 anos, interessadas em bem-estar e lifestyle" />
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="referencias">Referências visuais / links</label>
+          <input type="text" id="referencias" placeholder="Pinterest, Instagram, sites que te inspiram..." />
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn-prev" onclick="prevStep(2)">Anterior</button>
+          <button type="button" class="btn-next" onclick="nextStep(2)">Próximo</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Investimento -->
+      <div class="step-panel" id="step-3">
+        <h2 class="step-heading">Investimento &amp; prazo</h2>
+        <p class="step-sub">Isso me ajuda a montar uma proposta adequada ao seu momento.</p>
+
+        <div class="field">
+          <label class="field-label">Faixa de investimento <span>*</span></label>
+          <div class="budget-options" id="budgetOptions">
+            <div class="budget-opt" onclick="selectBudget(this,'Até R$ 1.500')">
+              <div class="budget-radio"></div>
+              <span class="budget-label">Até R$ 1.500</span>
+            </div>
+            <div class="budget-opt" onclick="selectBudget(this,'R$ 1.500 – R$ 3.000')">
+              <div class="budget-radio"></div>
+              <span class="budget-label">R$ 1.500 – R$ 3.000</span>
+            </div>
+            <div class="budget-opt" onclick="selectBudget(this,'R$ 3.000 – R$ 6.000')">
+              <div class="budget-radio"></div>
+              <span class="budget-label">R$ 3.000 – R$ 6.000</span>
+            </div>
+            <div class="budget-opt" onclick="selectBudget(this,'Acima de R$ 6.000')">
+              <div class="budget-radio"></div>
+              <span class="budget-label">Acima de R$ 6.000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Prazo desejado <span>*</span></label>
+          <div class="prazo-options" id="prazoOptions">
+            <div class="prazo-opt" onclick="selectPrazo(this,'Urgente (até 2 semanas)')">Urgente (até 2 sem.)</div>
+            <div class="prazo-opt" onclick="selectPrazo(this,'1 mês')">1 mês</div>
+            <div class="prazo-opt" onclick="selectPrazo(this,'2 a 3 meses')">2–3 meses</div>
+            <div class="prazo-opt" onclick="selectPrazo(this,'Flexível')">Flexível</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="observacoes">Alguma observação importante?</label>
+          <textarea id="observacoes" placeholder="Restrições, informações importantes, expectativas específicas..."></textarea>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn-prev" onclick="prevStep(3)">Anterior</button>
+          <button type="button" class="btn-next" onclick="nextStep(3)">Revisar proposta</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Revisão -->
+      <div class="step-panel" id="step-4">
+        <h2 class="step-heading">Revise e confirme</h2>
+        <p class="step-sub">Confira tudo antes de enviar. Posso alterar qualquer dado se precisar.</p>
+
+        <div class="summary-block">
+          <div class="summary-title">Seus dados</div>
+          <div class="summary-row"><span class="summary-key">Nome</span><span class="summary-val" id="s-nome">—</span></div>
+          <div class="summary-row"><span class="summary-key">E-mail</span><span class="summary-val" id="s-email">—</span></div>
+          <div class="summary-row"><span class="summary-key">WhatsApp</span><span class="summary-val" id="s-tel">—</span></div>
+          <div class="summary-row"><span class="summary-key">Empresa</span><span class="summary-val" id="s-empresa">—</span></div>
+        </div>
+
+        <div class="summary-block">
+          <div class="summary-title">O projeto</div>
+          <div class="summary-row"><span class="summary-key">Serviços</span><span class="summary-val" id="s-servicos">—</span></div>
+          <div class="summary-row"><span class="summary-key">Descrição</span><span class="summary-val" id="s-desc">—</span></div>
+          <div class="summary-row"><span class="summary-key">Público-alvo</span><span class="summary-val" id="s-publico">—</span></div>
+        </div>
+
+        <div class="summary-block">
+          <div class="summary-title">Investimento</div>
+          <div class="summary-row"><span class="summary-key">Faixa</span><span class="summary-val" id="s-budget">—</span></div>
+          <div class="summary-row"><span class="summary-key">Prazo</span><span class="summary-val" id="s-prazo">—</span></div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn-prev" onclick="prevStep(4)">Editar</button>
+          <button type="button" class="btn-next" id="submitBtn" onclick="submitForm()">Enviar proposta</button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- SUCESSO -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">✦</div>
+      <h2 class="success-title">Proposta<br><em>enviada!</em></h2>
+      <p class="success-text">Recebi sua solicitação e entrarei em contato em até 48 horas úteis com uma proposta detalhada. Fique de olho no seu e-mail!</p>
+      <a href="index.html" class="success-link">← Voltar ao portfólio</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="nav-logo" style="font-family:'Playfair Display',serif;font-size:1rem;">Ludmila<span style="color:var(--accent);">.</span></div>
+    <div class="footer-copy">© 2025 Ludmila Buorschiet — Todos os direitos reservados</div>
+  </footer>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 4;
+    const selectedServices = [];
+    let selectedBudget = '';
+    let selectedPrazo = '';
+
+    function updateProgress(step) {
+      for (let i = 1; i <= totalSteps; i++) {
+        const pi = document.getElementById(`pi-${i}`);
+        pi.classList.remove('active', 'done');
+        if (i < step) pi.classList.add('done');
+        else if (i === step) pi.classList.add('active');
+
+        const pl = document.getElementById(`pl-${i}`);
+        if (pl) pl.classList.toggle('done', i < step);
+      }
+    }
+
+    function nextStep(from) {
+      if (!validateStep(from)) return;
+      if (from === totalSteps - 1) buildSummary();
+      document.getElementById(`step-${from}`).classList.remove('active');
+      currentStep = from + 1;
+      document.getElementById(`step-${currentStep}`).classList.add('active');
+      updateProgress(currentStep);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function prevStep(from) {
+      document.getElementById(`step-${from}`).classList.remove('active');
+      currentStep = from - 1;
+      document.getElementById(`step-${currentStep}`).classList.add('active');
+      updateProgress(currentStep);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        const nome = document.getElementById('nome').value.trim();
+        const email = document.getElementById('email').value.trim();
+        if (!nome) { alert('Por favor, preencha seu nome.'); return false; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Por favor, insira um e-mail válido.'); return false; }
+      }
+      if (step === 2) {
+        if (selectedServices.length === 0) { alert('Selecione pelo menos um serviço.'); return false; }
+        if (!document.getElementById('descricao').value.trim()) { alert('Descreva seu projeto.'); return false; }
+      }
+      if (step === 3) {
+        if (!selectedBudget) { alert('Selecione uma faixa de investimento.'); return false; }
+        if (!selectedPrazo)  { alert('Selecione um prazo.'); return false; }
+      }
+      return true;
+    }
+
+    function toggleService(card, name) {
+      card.classList.toggle('selected');
+      const idx = selectedServices.indexOf(name);
+      if (idx === -1) selectedServices.push(name);
+      else selectedServices.splice(idx, 1);
+    }
+
+    function selectBudget(el, val) {
+      document.querySelectorAll('.budget-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedBudget = val;
+    }
+
+    function selectPrazo(el, val) {
+      document.querySelectorAll('.prazo-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedPrazo = val;
+    }
+
+    function buildSummary() {
+      document.getElementById('s-nome').textContent    = document.getElementById('nome').value || '—';
+      document.getElementById('s-email').textContent   = document.getElementById('email').value || '—';
+      document.getElementById('s-tel').textContent     = document.getElementById('telefone').value || '—';
+      document.getElementById('s-empresa').textContent = document.getElementById('empresa').value || '—';
+      document.getElementById('s-servicos').textContent = selectedServices.join(', ') || '—';
+      const desc = document.getElementById('descricao').value;
+      document.getElementById('s-desc').textContent = desc.length > 120 ? desc.slice(0, 120) + '...' : desc;
+      document.getElementById('s-publico').textContent = document.getElementById('publico').value || '—';
+      document.getElementById('s-budget').textContent  = selectedBudget || '—';
+      document.getElementById('s-prazo').textContent   = selectedPrazo || '—';
+    }
+
+    async function submitForm() {
+      const btn = document.getElementById('submitBtn');
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      const payload = {
+        nome:         document.getElementById('nome').value,
+        empresa:      document.getElementById('empresa').value,
+        email:        document.getElementById('email').value,
+        telefone:     document.getElementById('telefone').value,
+        comoconheceu: document.getElementById('comoconheceu').value,
+        servicos:     selectedServices.join(', '),
+        descricao:    document.getElementById('descricao').value,
+        publico:      document.getElementById('publico').value,
+        referencias:  document.getElementById('referencias').value,
+        budget:       selectedBudget,
+        prazo:        selectedPrazo,
+        observacoes:  document.getElementById('observacoes').value,
+      };
+
+      try {
+        const res = await fetch('/api/proposta', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          document.getElementById('proposalForm').style.display = 'none';
+          document.getElementById('successScreen').classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const d = await res.json();
+          alert(d.error || 'Erro ao enviar. Tente novamente.');
+          btn.textContent = 'Enviar proposta';
+          btn.disabled = false;
+        }
+      } catch {
+        alert('Erro de conexão. Tente novamente.');
+        btn.textContent = 'Enviar proposta';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

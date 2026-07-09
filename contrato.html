@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contrato de Prestação de Serviços — Ludmila Buorschiet</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #F95D40;
+      --muted: #563D52;
+      --mid: #9A7886;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      font-size: 10.5pt;
+      color: #1a1a1a;
+      background: #f5f3f0;
+      padding: 2rem;
+    }
+
+    /* ── TOPO (apenas tela) ── */
+    .screen-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #1C101E; color: #FFF8F9; padding: 1rem 1.5rem;
+      border-radius: 8px; margin-bottom: 2rem; gap: 1rem; flex-wrap: wrap;
+    }
+    .screen-bar-title { font-family: sans-serif; font-size: .85rem; opacity: .7; }
+    .screen-bar-logo { font-family: 'Georgia', serif; font-size: 1.1rem; }
+    .screen-bar-logo span { color: #F95D40; }
+    .btn-print {
+      font-family: sans-serif; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      background: #F95D40; color: #1C101E; border: none; padding: .6rem 1.5rem;
+      cursor: pointer; border-radius: 2px; transition: opacity .2s;
+    }
+    .btn-print:hover { opacity: .85; }
+    .btn-back {
+      font-family: sans-serif; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,248,249,.5); text-decoration: none;
+    }
+
+    /* ── PÁGINA ── */
+    .page {
+      background: #fff;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 70px;
+      box-shadow: 0 4px 40px rgba(0,0,0,.12);
+      min-height: 297mm;
+    }
+
+    /* ── CABEÇALHO ── */
+    .doc-header { border-bottom: 2px solid #1a1a1a; padding-bottom: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; }
+    .doc-logo { font-size: 1.4rem; font-weight: bold; letter-spacing: -.02em; }
+    .doc-logo span { color: #F95D40; }
+    .doc-meta { text-align: right; font-size: .8rem; color: #555; line-height: 1.6; font-family: 'Courier New', monospace; }
+
+    /* ── TÍTULO ── */
+    .doc-title { text-align: center; margin-bottom: 2.5rem; }
+    .doc-title h1 { font-size: 1rem; font-weight: bold; text-transform: uppercase; letter-spacing: .12em; margin-bottom: .25rem; }
+    .doc-title p { font-size: .8rem; color: #555; font-family: sans-serif; }
+
+    /* ── PARTES ── */
+    .partes-box { border: 1px solid #ddd; padding: 1.25rem 1.5rem; margin-bottom: 2rem; background: #fafaf9; }
+    .parte { margin-bottom: 1rem; }
+    .parte:last-child { margin-bottom: 0; }
+    .parte-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #888; font-family: sans-serif; margin-bottom: .35rem; }
+    .parte-dados { line-height: 1.8; }
+    .parte-dados strong { font-size: .95rem; }
+    .parte-separator { border: none; border-top: 1px solid #eee; margin: 1rem 0; }
+
+    /* ── CLÁUSULAS ── */
+    .clause { margin-bottom: 1.75rem; }
+    .clause-title { font-size: .82rem; font-weight: bold; text-transform: uppercase; letter-spacing: .1em; font-family: sans-serif; border-left: 3px solid #F95D40; padding-left: .75rem; margin-bottom: .75rem; }
+    .clause-body { line-height: 1.85; color: #222; }
+    .clause-body p { margin-bottom: .6rem; }
+    .clause-body ul { padding-left: 1.5rem; margin: .5rem 0; }
+    .clause-body li { margin-bottom: .35rem; }
+
+    /* ── CAMPOS EDITÁVEIS ── */
+    .field {
+      border: none; border-bottom: 1px dashed #bbb;
+      font-family: 'Georgia', serif; font-size: 10.5pt; color: #1a1a1a;
+      background: transparent; outline: none; min-width: 120px;
+      padding: 0 .2rem;
+    }
+    .field:focus { border-bottom-color: #F95D40; background: #fff9f7; }
+    .field-block {
+      display: block; width: 100%; border: none; border-bottom: 1px dashed #bbb;
+      font-family: 'Georgia', serif; font-size: 10.5pt; color: #1a1a1a;
+      background: transparent; outline: none; padding: .2rem .2rem .3rem;
+      margin-top: .2rem;
+    }
+    .field-block:focus { border-bottom-color: #F95D40; background: #fff9f7; }
+
+    /* ── ASSINATURAS ── */
+    .signatures { margin-top: 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .sig-block { border-top: 1px solid #1a1a1a; padding-top: .75rem; }
+    .sig-name { font-weight: bold; font-size: .9rem; }
+    .sig-role { font-size: .78rem; color: #666; font-family: sans-serif; }
+    .sig-line { margin-top: 3rem; border-top: 1px solid #aaa; padding-top: .5rem; font-size: .75rem; color: #888; font-family: sans-serif; }
+
+    /* ── RODAPÉ ── */
+    .doc-footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: .72rem; color: #999; font-family: sans-serif; text-align: center; line-height: 1.6; }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .screen-bar { display: none; }
+      .page { box-shadow: none; padding: 40px 60px; margin: 0; max-width: 100%; }
+      .field, .field-block { border-bottom-color: #ccc; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="screen-bar">
+    <a href="index.html" class="btn-back">← Portfólio</a>
+    <span class="screen-bar-logo">Ludmila<span>.</span> <span style="opacity:.4;font-size:.85rem;font-family:sans-serif;">— Modelo de contrato</span></span>
+    <button class="btn-print" onclick="window.print()">Imprimir / Salvar PDF</button>
+  </div>
+
+  <div class="page">
+
+    <div class="doc-header">
+      <div class="doc-logo">Ludmila<span>.</span></div>
+      <div class="doc-meta">
+        Contrato nº <input class="field" style="width:60px;" placeholder="001/2025" /><br>
+        Data: <input class="field" style="width:100px;" placeholder="__/__/____" /><br>
+        Versão 1.0
+      </div>
+    </div>
+
+    <div class="doc-title">
+      <h1>Contrato de Prestação de Serviços de Design</h1>
+      <p>Leia atentamente antes de assinar. Em caso de dúvidas, entre em contato antes da formalização.</p>
+    </div>
+
+    <!-- PARTES -->
+    <div class="partes-box">
+      <div class="parte">
+        <div class="parte-label">Contratada (prestadora de serviços)</div>
+        <div class="parte-dados">
+          <strong>Ludmila Buorschiet</strong><br>
+          Designer Visual &amp; Diretora Criativa<br>
+          CPF: <input class="field" style="width:130px;" placeholder="000.000.000-00" /> &nbsp;
+          E-mail: <input class="field" style="width:180px;" placeholder="ola@ludmila.design" /><br>
+          Cidade/UF: <input class="field" style="width:200px;" placeholder="São Paulo / SP" />
+        </div>
+      </div>
+      <hr class="parte-separator" />
+      <div class="parte">
+        <div class="parte-label">Contratante (cliente)</div>
+        <div class="parte-dados">
+          <strong><input class="field" style="width:280px;" placeholder="Nome completo ou razão social" /></strong><br>
+          CPF/CNPJ: <input class="field" style="width:160px;" placeholder="000.000.000-00" /> &nbsp;
+          E-mail: <input class="field" style="width:200px;" placeholder="cliente@email.com" /><br>
+          Endereço: <input class="field" style="width:100%;" placeholder="Rua, número, cidade, estado, CEP" />
+        </div>
+      </div>
+    </div>
+
+    <!-- CLÁUSULAS -->
+    <div class="clause">
+      <div class="clause-title">Cláusula 1 — Objeto do contrato</div>
+      <div class="clause-body">
+        <p>A Contratada compromete-se a prestar os seguintes serviços de design:</p>
+        <p><input class="field-block" placeholder="Ex: Desenvolvimento completo de identidade visual — logo, tipografia, paleta de cores, papelaria e manual de marca." /></p>
+        <p>O escopo detalhado e os entregáveis estão descritos no briefing aprovado pelas partes, que passa a integrar este contrato como <strong>Anexo I</strong>.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 2 — Prazo de entrega</div>
+      <div class="clause-body">
+        <p>O projeto será entregue em até <input class="field" style="width:60px;" placeholder="30" /> dias corridos a partir da <strong>aprovação do briefing e do recebimento do sinal</strong>.</p>
+        <p>O prazo poderá ser estendido nas seguintes situações:</p>
+        <ul>
+          <li>Atraso no envio de materiais, informações ou feedbacks pelo Contratante (superior a 5 dias úteis);</li>
+          <li>Solicitação de alterações que fujam ao escopo original;</li>
+          <li>Eventos de força maior.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 3 — Valor e forma de pagamento</div>
+      <div class="clause-body">
+        <p>O valor total acordado para a prestação dos serviços é de <strong>R$ <input class="field" style="width:80px;" placeholder="0.000,00" /></strong> (<input class="field" style="width:200px;" placeholder="valor por extenso" />).</p>
+        <p>O pagamento será realizado da seguinte forma:</p>
+        <ul>
+          <li><strong>50% de sinal</strong> — R$ <input class="field" style="width:80px;" placeholder="0.000,00" /> — no ato da assinatura deste contrato, como condição de início dos trabalhos;</li>
+          <li><strong>50% na entrega final</strong> — R$ <input class="field" style="width:80px;" placeholder="0.000,00" /> — antes da transferência dos arquivos finais.</li>
+        </ul>
+        <p>Pagamentos via: <input class="field" style="width:260px;" placeholder="Pix (chave: CPF/e-mail) | Transferência bancária" /></p>
+        <p>Atrasos no pagamento incorrem em multa de 2% + juros de 1% ao mês sobre o valor em aberto.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 4 — Revisões e alterações</div>
+      <div class="clause-body">
+        <p>Estão inclusas <strong><input class="field" style="width:30px;" placeholder="2" /> rodadas de revisão</strong> por entregável. Entende-se por revisão o ajuste de elementos já apresentados dentro do escopo aprovado.</p>
+        <p>Revisões adicionais ou alterações de escopo serão cobradas à parte, mediante orçamento prévio aprovado pelo Contratante.</p>
+        <p><strong>Não são consideradas revisões:</strong> mudanças de conceito, reposicionamento de marca, alteração de briefing ou solicitações que impliquem retrabalho total de etapas já aprovadas.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 5 — Direitos autorais e propriedade intelectual</div>
+      <div class="clause-body">
+        <p>Todos os arquivos, conceitos e criações desenvolvidos pela Contratada são protegidos pela Lei de Direitos Autorais (Lei nº 9.610/98).</p>
+        <p>A transferência total dos direitos patrimoniais sobre os arquivos finais ao Contratante ocorrerá <strong>somente após a quitação integral do valor contratado</strong>.</p>
+        <p>A Contratada reserva-se o direito de utilizar o projeto em seu portfólio, redes sociais e materiais de divulgação, salvo expressa solicitação de confidencialidade pelo Contratante, formalizada por escrito.</p>
+        <p>Arquivos de trabalho (PSDs, IAs, fontes pagas, etc.) <strong>não são transferidos</strong>, salvo acordo específico com custo adicional.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 6 — Responsabilidades do contratante</div>
+      <div class="clause-body">
+        <p>O Contratante compromete-se a:</p>
+        <ul>
+          <li>Fornecer todas as informações, materiais e feedbacks necessários dentro dos prazos combinados;</li>
+          <li>Garantir que os textos, imagens e conteúdos fornecidos não violam direitos de terceiros;</li>
+          <li>Aprovar ou solicitar revisões em até <input class="field" style="width:30px;" placeholder="5" /> dias úteis após cada entrega. O silêncio será interpretado como aprovação tácita;</li>
+          <li>Manter sigilo sobre processos criativos, valores e informações confidenciais da Contratada.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 7 — Cancelamento e rescisão</div>
+      <div class="clause-body">
+        <p><strong>Cancelamento pelo Contratante:</strong></p>
+        <ul>
+          <li>Antes do início dos trabalhos: devolução de 80% do sinal pago;</li>
+          <li>Após início e até 30% de execução: retenção de 50% do valor total;</li>
+          <li>Após 30% de execução: não há devolução de valores pagos; serviços executados até o momento serão cobrados proporcionalmente.</li>
+        </ul>
+        <p style="margin-top:.6rem;"><strong>Cancelamento pela Contratada:</strong> devolução integral dos valores pagos, acrescida de indenização equivalente a 10% do valor total do contrato.</p>
+        <p>O cancelamento deve ser comunicado por e-mail com no mínimo 5 dias úteis de antecedência.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 8 — Sigilo e confidencialidade</div>
+      <div class="clause-body">
+        <p>Ambas as partes comprometem-se a manter em sigilo todas as informações confidenciais obtidas em razão deste contrato, não as divulgando a terceiros sem consentimento prévio por escrito da outra parte. Esta obrigação permanece vigente por 2 (dois) anos após o término do contrato.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 9 — Disposições gerais</div>
+      <div class="clause-body">
+        <p>Este contrato representa o acordo integral entre as partes, substituindo qualquer entendimento verbal ou escrito anterior sobre o mesmo objeto.</p>
+        <p>Qualquer alteração deverá ser formalizada por aditivo assinado por ambas as partes.</p>
+        <p>As comunicações entre as partes poderão ser realizadas por e-mail ou WhatsApp, sendo consideradas válidas para todos os efeitos legais.</p>
+      </div>
+    </div>
+
+    <div class="clause">
+      <div class="clause-title">Cláusula 10 — Foro</div>
+      <div class="clause-body">
+        <p>As partes elegem o foro da Comarca de <input class="field" style="width:180px;" placeholder="cidade da Contratada" />, Estado de <input class="field" style="width:120px;" placeholder="SP" />, para dirimir quaisquer controvérsias oriundas deste contrato, renunciando a qualquer outro, por mais privilegiado que seja.</p>
+      </div>
+    </div>
+
+    <p style="margin-bottom:2rem;line-height:1.8;">Por estarem justas e contratadas, as partes assinam o presente instrumento em 2 (duas) vias de igual teor e forma, na cidade de <input class="field" style="width:160px;" placeholder="cidade" />, em <input class="field" style="width:100px;" placeholder="__/__/____" />.</p>
+
+    <!-- ASSINATURAS -->
+    <div class="signatures">
+      <div class="sig-block">
+        <div class="sig-name">Ludmila Buorschiet</div>
+        <div class="sig-role">Contratada — Designer Visual</div>
+        <div class="sig-line">Assinatura / Data</div>
+      </div>
+      <div class="sig-block">
+        <div class="sig-name"><input class="field" style="width:220px;" placeholder="Nome do Contratante" /></div>
+        <div class="sig-role">Contratante</div>
+        <div class="sig-line">Assinatura / Data</div>
+      </div>
+    </div>
+
+    <div class="doc-footer">
+      Ludmila Buorschiet · Designer Visual &amp; Diretora Criativa · ola@ludmila.design<br>
+      Este modelo tem caráter orientativo. Para projetos de alto valor, recomenda-se revisão jurídica.
+    </div>
+
+  </div>
+
+</body>
+</html>
