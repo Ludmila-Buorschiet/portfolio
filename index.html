@@ -3,7 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ludmila — Designer & Criativa</title>
+  <title>Ludmila Buorschiet — Designer Visual & Diretora Criativa</title>
+  <meta name="description" content="Portfólio de Ludmila Buorschiet — Designer Visual e Diretora Criativa baseada em São Paulo. Especialista em identidade visual, direção de arte, UI/UX e branding estratégico." />
+  <meta name="author" content="Ludmila Buorschiet" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://ludmilabuorschiet.com.br/" />
+  <meta property="og:title"       content="Ludmila Buorschiet — Designer Visual & Diretora Criativa" />
+  <meta property="og:description" content="Portfólio de Ludmila Buorschiet — especialista em identidade visual, direção de arte e branding estratégico em São Paulo." />
+  <meta property="og:image"       content="https://ludmilabuorschiet.com.br/og-image.jpg" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Ludmila Buorschiet — Designer Visual" />
+  <meta name="twitter:description" content="Portfólio de Ludmila Buorschiet — identidade visual, direção de arte e branding em São Paulo." />
+  <meta name="twitter:image"       content="https://ludmilabuorschiet.com.br/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
@@ -17,8 +36,12 @@
       --nude: #E2C7BC;
       --muted: #563D52;
       --mid: #9A7886;
-      --dark: #202124;
       --border: rgba(255,248,249,0.1);
+
+      /* largura do container. maior = margem menor.
+         margem = (largura da tela − container) ÷ 2 */
+      --container: 1320px;
+      --gutter-min: 2.5rem;
     }
 
     html { scroll-behavior: smooth; }
@@ -29,13 +52,39 @@
       font-family: 'DM Sans', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      padding-top: 5rem;
     }
 
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: var(--nude); border-radius: 2px; }
+
+    /* ── DEBUG LAYOUT (tecla G liga/desliga) ── */
+    body.debug-grid * {
+      outline: 1px solid rgba(249,93,64,.35);
+    }
+
+    .debug-columns {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      width: 100%;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0;
+      gap: 24px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    body.debug-grid .debug-columns { display: grid; }
+
+    .debug-columns span {
+      background: rgba(249,93,64,.08);
+      border-left: 1px solid rgba(249,93,64,.2);
+      border-right: 1px solid rgba(249,93,64,.2);
+    }
 
     /* ── NAV ── */
     nav {
@@ -49,12 +98,12 @@
       justify-content: space-between;
       padding: .9rem 2rem;
       width: calc(100% - 3rem);
-      max-width: 1100px;
+      max-width: var(--container);
       border-radius: 100px;
-      border: 1px solid rgba(255,248,249,0.15);
-      background: rgba(28,16,30,0.85);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,248,249,0.1);
+      background: rgba(28,16,30,0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
     }
 
     .nav-logo {
@@ -91,7 +140,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--bg);
-      background: var(--accent);
+      background: var(--nude);
       padding: .55rem 1.4rem;
       border: none;
       cursor: pointer;
@@ -122,28 +171,21 @@
     /* ── HERO ── */
     #hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 2.5rem 4rem;
-      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem max(var(--gutter-min), calc((100% - var(--container)) / 2)) 4rem;
+      gap: 3rem;
       overflow: hidden;
+      position: relative;
     }
 
-    .hero-bg-letter {
-      position: absolute;
-      top: 50%;
-      right: -4rem;
-      transform: translateY(-50%);
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(18rem, 32vw, 38rem);
-      font-weight: 900;
-      font-style: italic;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255,248,249,.06);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      position: relative;
+      z-index: 3;
     }
 
     .hero-label {
@@ -152,44 +194,41 @@
       letter-spacing: .18em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 1.5rem;
+    }
+
+    .hero-greeting {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-weight: 300;
+      color: rgba(255,248,249,.55);
+      margin-bottom: .4rem;
     }
 
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 9vw, 9rem);
+      font-size: clamp(2.8rem, 5vw, 5.5rem);
       font-weight: 900;
-      line-height: .95;
+      line-height: 1;
       letter-spacing: -.02em;
-      max-width: 14ch;
-      position: relative;
-      z-index: 1;
     }
 
     .hero-title em {
       font-style: italic;
-      color: var(--nude);
-    }
-
-    .hero-sub {
-      margin-top: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      flex-wrap: wrap;
+      color: var(--accent);
     }
 
     .hero-desc {
-      max-width: 36ch;
+      max-width: 40ch;
       font-size: 1rem;
       line-height: 1.7;
-      color: rgba(255,248,249,.65);
+      color: rgba(255,248,249,.6);
     }
 
     .hero-cta-group {
       display: flex;
       gap: 1rem;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .btn-primary {
@@ -198,13 +237,13 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--bg);
-      background: var(--text);
+      background: var(--accent);
       padding: .85rem 2rem;
       text-decoration: none;
-      transition: background .2s, color .2s;
+      transition: background .2s;
     }
 
-    .btn-primary:hover { background: var(--accent); color: var(--bg); }
+    .btn-primary:hover { background: var(--text); }
 
     .btn-outline {
       font-family: 'DM Mono', monospace;
@@ -212,39 +251,59 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--text);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,248,249,.25);
       padding: .85rem 2rem;
       text-decoration: none;
-      transition: border-color .2s, color .2s;
+      transition: border-color .2s;
     }
 
     .btn-outline:hover { border-color: var(--text); }
 
-    .hero-scroll {
-      margin-top: 4rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    /* blob visual — replica a referência: o blob sangra o canto
+       superior direito da tela (bleed no topo e na direita), e a
+       foto é cortada pela curva inferior por um wrapper com o mesmo
+       border-radius de baixo. No desktop, .hero-visual fica static
+       para o blob se ancorar no #hero; no mobile ela volta a ser o
+       container relativo. */
+    .hero-visual {
+      position: static;
     }
 
-    .hero-scroll-line {
-      width: 48px;
-      height: 1px;
+    .hero-blob {
+      position: absolute;
+      top: -8%;
+      right: -6%;
+      width: 52%;
+      height: 82%;
       background: var(--accent);
-      animation: expandLine 1.4s ease infinite alternate;
+      clip-path: url(#blobClip);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1;
+      transform: scale(1.18);
+      transform-origin: top right;
     }
 
-    @keyframes expandLine {
-      from { width: 24px; opacity: .4; }
-      to { width: 56px; opacity: 1; }
+    .hero-photo {
+      width: 82%;
+      height: 92%;
+      object-fit: contain;
+      object-position: bottom center;
+      display: block;
+      transform: translate(8%, 14%);
     }
 
-    .hero-scroll span {
-      font-family: 'DM Mono', monospace;
-      font-size: .65rem;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: rgba(255,248,249,.4);
+    @media (max-width: 860px) {
+      #hero {
+        grid-template-columns: 1fr;
+        padding: 7rem 1.5rem 3rem;
+        min-height: auto;
+        gap: 2.5rem;
+      }
+      .hero-visual { position: relative; height: 380px; }
+      .hero-blob { top: 0; right: -12%; width: 100%; height: 95%; }
     }
 
     /* ── TICKER ── */
@@ -292,7 +351,9 @@
     .ticker-item.highlight { color: var(--nude); }
 
     /* ── SECTION COMMONS ── */
-    section { padding: 7rem 2.5rem; }
+    /* container real: conteúdo travado em 1200px, centralizado.
+       fundos/bordas continuam full-bleed pois a section é 100%. */
+    section { padding: 7rem max(var(--gutter-min), calc((100% - var(--container)) / 2)); }
 
     .section-tag {
       font-family: 'DM Mono', monospace;
@@ -550,7 +611,7 @@
 
     #sobre .section-tag { color: rgba(28,16,30,.6); }
     #sobre .section-title { color: var(--bg); }
-    #sobre .section-title em { color: #1C101E; opacity: .45; }
+    #sobre .section-title em { color: var(--muted); opacity: .55; }
 
     .about-layout {
       display: grid;
@@ -616,8 +677,8 @@
     .contact-bg {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(182,255,0,.07) 0%, transparent 60%),
-                  radial-gradient(ellipse 60% 80% at 80% 30%, rgba(212,168,255,.06) 0%, transparent 60%),
+      background: radial-gradient(ellipse 80% 60% at 20% 50%, rgba(249,93,64,.07) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 80% at 80% 30%, rgba(226,199,188,.05) 0%, transparent 60%),
                   var(--bg);
       animation: contactPulse 8s ease-in-out infinite alternate;
     }
@@ -723,12 +784,12 @@
       border-radius: 100px;
       text-decoration: none;
       transition: transform .15s ease, box-shadow .15s ease;
-      box-shadow: 0 0 0 0 rgba(182,255,0,0);
+      box-shadow: 0 0 0 0 rgba(249,93,64,0);
       will-change: transform;
     }
 
     .mag-btn:hover {
-      box-shadow: 0 12px 40px rgba(182,255,0,.3);
+      box-shadow: 0 12px 40px rgba(249,93,64,.3);
     }
 
     .mag-btn-icon {
@@ -784,7 +845,7 @@
       transition: transform .3s cubic-bezier(.25,.46,.45,.94);
     }
 
-    .contact-card:hover { background: rgba(182,255,0,.05); }
+    .contact-card:hover { background: rgba(249,93,64,.05); }
     .contact-card:hover::before { transform: scaleX(1); }
 
     .cc-icon {
@@ -967,6 +1028,12 @@
 </head>
 <body>
 
+  <!-- DEBUG GRID (tecla G) -->
+  <div class="debug-columns" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
   <!-- NAV -->
   <nav id="navbar">
     <a href="#hero" class="nav-logo">Ludmila<span>.</span></a>
@@ -993,23 +1060,34 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="hero-bg-letter">L</div>
-    <div class="hero-label">Designer Visual &amp; Diretora Criativa</div>
-    <h1 class="hero-title">
-      Onde <em>arte</em><br>encontra<br>estratégia.
-    </h1>
-    <div class="hero-sub">
-      <p class="hero-desc">
-        Transformo ideias complexas em experiências visuais que conectam marcas às pessoas certas — com intenção, estética e impacto.
-      </p>
+    <div class="hero-content">
+      <div class="hero-label">Designer Visual &amp; Diretora Criativa</div>
+      <div>
+        <p class="hero-greeting">Olá, meu nome é</p>
+        <h1 class="hero-title">Ludmila<br><em>Buorschiet</em></h1>
+      </div>
+      <p class="hero-desc">Transformo ideias complexas em experiências visuais que conectam marcas às pessoas certas — com intenção, estética e impacto.</p>
       <div class="hero-cta-group">
         <a href="#projetos" class="btn-primary">Ver projetos</a>
         <a href="#contato" class="btn-outline">Fale comigo</a>
       </div>
     </div>
-    <div class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      <span>Scroll</span>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <clipPath id="blobClip" clipPathUnits="objectBoundingBox">
+          <path d="M 0.375 0
+                   C 0.225 0.15, 0.15 0.3125, 0.275 0.475
+                   C 0.40 0.6375, 0.225 0.775, 0.50 0.90
+                   C 0.6875 0.975, 0.85 0.90, 1 1
+                   L 1 0 Z"/>
+        </clipPath>
+      </defs>
+    </svg>
+
+    <div class="hero-visual">
+      <div class="hero-blob">
+        <img src="assets/images/foto-ludmila.png" alt="Ludmila Buorschiet" class="hero-photo">
+      </div>
     </div>
   </section>
 
@@ -1211,22 +1289,28 @@
       </div>
 
       <div class="contact-cards reveal reveal-delay-4">
-        <a href="mailto:ola@ludmila.design" class="contact-card">
+        <a href="mailto:contato@ludmilabuorschiet.com.br" class="contact-card">
           <div class="cc-icon">✉</div>
           <div class="cc-label">E-mail</div>
-          <div class="cc-value">ola@ludmila.design</div>
+          <div class="cc-value">contato@ludmilabuorschiet.com.br</div>
           <div class="cc-arrow">↗</div>
         </a>
-        <a href="#" class="contact-card">
+        <a href="https://www.instagram.com/lud_buorschiet/" target="_blank" rel="noopener" class="contact-card">
           <div class="cc-icon">◎</div>
           <div class="cc-label">Instagram</div>
-          <div class="cc-value">@ludmila.design</div>
+          <div class="cc-value">@lud_buorschiet</div>
           <div class="cc-arrow">↗</div>
         </a>
-        <a href="#" class="contact-card">
+        <a href="https://www.linkedin.com/in/ludmila-buorschiet/" target="_blank" rel="noopener" class="contact-card">
           <div class="cc-icon">⬡</div>
           <div class="cc-label">LinkedIn</div>
-          <div class="cc-value">/in/ludmiladesign</div>
+          <div class="cc-value">/in/ludmila-buorschiet</div>
+          <div class="cc-arrow">↗</div>
+        </a>
+        <a href="https://www.behance.net/ludmilabuorsch" target="_blank" rel="noopener" class="contact-card">
+          <div class="cc-icon">▣</div>
+          <div class="cc-label">Behance</div>
+          <div class="cc-value">ludmilabuorsch</div>
           <div class="cc-arrow">↗</div>
         </a>
       </div>
@@ -1243,10 +1327,18 @@
       <li><a href="#sobre">Sobre</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
-    <div class="footer-copy">© 2025 Ludmila — Todos os direitos reservados</div>
+    <a href="privacidade.html" style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.08em;color:rgba(255,248,249,.25);text-decoration:none;transition:color .2s;" onmouseover="this.style.color='rgba(255,248,249,.6)'" onmouseout="this.style.color='rgba(255,248,249,.25)'">Privacidade</a>
+    <div class="footer-copy">© 2025 Ludmila Buorschiet — Todos os direitos reservados</div>
   </footer>
 
   <script>
+    // DEBUG: tecla G liga/desliga contornos + grade de colunas
+    document.addEventListener('keydown', (e) => {
+      if ((e.key === 'g' || e.key === 'G') && !e.target.matches('input, textarea')) {
+        document.body.classList.toggle('debug-grid');
+      }
+    });
+
     // NAV scroll
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
@@ -1312,50 +1404,6 @@
       });
     }
 
-    // Form submit → API
-    async function handleForm(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      const original = btn.textContent;
-      btn.textContent = 'Enviando...';
-      btn.disabled = true;
-
-      const body = {
-        nome: e.target.querySelector('#nome')?.value,
-        email: e.target.querySelector('#email')?.value,
-        servico: e.target.querySelector('#servico')?.value,
-        mensagem: e.target.querySelector('#msg')?.value,
-      };
-
-      try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          btn.textContent = 'Mensagem enviada ✓';
-          btn.style.background = 'var(--nude)';
-          btn.style.color = 'var(--bg)';
-          e.target.reset();
-          setTimeout(() => {
-            btn.textContent = original;
-            btn.style.background = '';
-            btn.style.color = '';
-            btn.disabled = false;
-          }, 4000);
-        } else {
-          btn.textContent = data.error || 'Erro ao enviar';
-          btn.style.background = '#c0392b';
-          setTimeout(() => { btn.textContent = original; btn.style.background = ''; btn.disabled = false; }, 3000);
-        }
-      } catch {
-        btn.textContent = 'Erro de conexão';
-        btn.style.background = '#c0392b';
-        setTimeout(() => { btn.textContent = original; btn.style.background = ''; btn.disabled = false; }, 3000);
-      }
-    }
   </script>
 </body>
 </html>

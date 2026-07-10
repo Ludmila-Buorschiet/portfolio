@@ -98,7 +98,7 @@ module.exports = async function handler(req, res) {
           </div>
 
           <div style="padding:1rem 2rem;border-top:1px solid rgba(255,248,249,.08);">
-            <p style="margin:0;font-size:.7rem;color:rgba(255,248,249,.25);">Enviado via portfólio · ludmila.design</p>
+            <p style="margin:0;font-size:.7rem;color:rgba(255,248,249,.25);">Enviado via portfólio · ludmilabuorschiet.com.br</p>
           </div>
         </div>
       `,
